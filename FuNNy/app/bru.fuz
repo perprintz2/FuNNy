@@ -1,0 +1,54 @@
+temp: input;
+flow: input;
+
+  cold   temp: sigmoid(25.0,a, 33.0,a, 1.0,a);
+  middle temp: triangle(28.0,a, 33.0,c, 38.0,a, 1.0,a);
+  hot    temp: sigmoid(40.0,a, 33.0,a, 1.0,a);
+
+  to_little flow: sigmoid(0.0,a, 0.5,a, 1.0,a);
+  to_much   flow: sigmoid(1.0,a, 0.5,a, 1.0,a);
+
+  big_down   cold_water: output(-0.1,a);
+  small_down cold_water: output(-0.02,a);
+  no_change  cold_water: output( 0,a);
+  small_up   cold_water: output( 0.02,a);
+  big_up     cold_water: output( 0.1,a);
+
+  big_down   hot_water:  output(-0.1,a);
+  small_down hot_water:  output(-0.02,a);
+  no_change  hot_water:  output( 0,a);
+  small_up   hot_water:  output( 0.02,a);
+  big_up     hot_water:  output( 0.1,a);
+
+rules
+
+  if temp is hot and flow is not to_little then hot_water is big_down
+
+  if temp is cold and flow is not to_much then hot_water is big_up
+  if temp is cold and flow is to_much     then hot_water is small_up
+
+  if temp is hot  and flow is not to_much then cold_water is big_up
+  if temp is hot  and flow is to_much     then cold_water is small_up
+
+  if temp is cold      										then cold_water is small_down
+  if flow is extremely to_little          then cold_water is big_up
+  if flow is extremely to_much            then cold_water is big_down
+  if flow is not extremely to_little      then hot_water is big_up
+  if flow is not extremely to_much        then hot_water is big_down
+
+  if temp is about 20 to about 33         then hot_water is big_up
+  if temp is about 33 to about 55         then hot_water is big_down
+if temp is about 33                     then cold_water is no_change
+if temp is about 33                     then hot_water is no_change
+
+if temp is about 20 to about 33  then cold_water is big_down
+if temp is about 33 to about 55  then cold_water is big_up
+
+if temp is middle    then hot_water is no_change
+if temp is middle    then cold_water is no_change
+
+if flow is to_little then cold_water is small_up
+if flow is to_much   then cold_water is small_down
+
+if flow is to_little then hot_water is small_up
+if flow is to_much   then hot_water is small_down

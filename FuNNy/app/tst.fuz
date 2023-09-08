@@ -1,0 +1,35 @@
+# input section
+    X: input;
+    Y: input;
+
+# Membership functions
+
+    HIGH X: trapez(25.0,a, 30.0,a, 100,a, 100,a, 1.0,c);
+    MID  X: triangle(18,a, 25,a, 30,a, 1.0,c);
+  	LOW  X: trapez(0,a, 0,a, 18,a, 25.0,a, 1.0,c);
+ 
+
+    HIGH Y: sigmoid(30.0,a, 25.0,a, 1.0,c);
+    MID  Y: triangle(18,a, 25,a, 30,a, 1.0,c);
+  	LOW  Y: sigmoid(15.0,a, 25.0,a, 1.0,c);
+
+    UP   OUT1: output( 2.0,a);
+    ZERO OUT1: output( 0.0,a);
+    DOWN OUT1: output(-2.0,a);
+ 
+ 	UP   OUT2: output( 2.0,a);
+    ZERO OUT2: output( 0.0,a);
+    DOWN OUT2: output(-2.0,a);
+ 
+
+rules
+
+# Rule section    
+
+	if X is HIGH and Y is LOW      then OUT1 is UP
+    if X is LOW  and Y is MID      then OUT1 is ZERO
+    if X is LOW  and Y is LOW      then OUT1 is DOWN
+
+	if X is not extremely HIGH or  Y is LOW  then OUT2 is UP
+    if X is more-or-less  LOW  or  Y is not MID  then OUT2 is ZERO
+    if X is LOW and Y is very LOW and Y is about 22.0 to about 24.0 then OUT2 is DOWN

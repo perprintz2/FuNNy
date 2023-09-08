@@ -1,0 +1,38 @@
+temp : input;
+flow : input;
+
+cold   temp: sigmoid(25.0,a, 30.0,c, 1.0,c);
+middle temp: triangle(28.0,a, 33.0,c, 38.0,c, 1.0,c);
+hot    temp: sigmoid(40.0,a, 35.0,c, 0.8,c);
+
+to_little flow: sigmoid(0.3,c, 0.4,c, 1.0,c);
+to_much  flow: sigmoid(0.6,c, 0.5,c, 1.0,c);
+
+big_down   cold_water: output(-0.1,c);
+small_down cold_water: output(-0.02,c);
+no_change  cold_water: output( 0,c);
+small_up   cold_water: output( 0.02,c);
+big_up     cold_water: output( 0.1,c);
+
+big_down   hot_water: output(-0.1,c);
+small_down hot_water: output(-0.02,c);
+no_change  hot_water: output( 0,c);
+small_up   hot_water: output( 0.02,c);
+big_up     hot_water: output( 0.1,c);
+
+rules
+
+if temp is hot        then hot_water is big_down
+if temp is cold       then hot_water is small_up
+
+if temp is hot        then cold_water is big_up
+if temp is cold       then cold_water is small_down
+
+if temp is middle     then hot_water is no_change
+if temp is middle     then cold_water is no_change
+
+if flow is to_little  then cold_water is small_up
+if flow is to_much    then cold_water is small_down
+
+if flow is to_little  then hot_water is small_up
+if flow is to_much    then hot_water is small_down

@@ -1,0 +1,33 @@
+x : input;
+
+  mf1   x: bell(-1.05,a, 0.15,a, 1,c);
+  mf2   x: bell(-0.75,a, 0.15,a, 1,c);
+  mf3   x: bell(-0.45,a, 0.15,a, 1,c);
+  mf4   x: bell(-0.15,a, 0.15,a, 1,c);
+ 
+  mf5   x: bell( 0.15,a, 0.15,a, 1,c);
+  mf6   x: bell( 0.45,a, 0.15,a, 1,c);
+  mf7   x: bell( 0.75,a, 0.15,a, 1,c); 
+  mf8   x: bell( 1.05,a, 0.15,a, 1,c);
+
+  o1    y: output(0.0,a);
+  o2    y: output(-0.5,a);
+  o3    y: output(-0.5,a);
+  o4    y: output(-0.5,a);
+  o5    y: output( 0.5,a);
+  o6    y: output( 0.5,a);
+  o7    y: output( 0.5,a);
+  o8    y: output( 0.0,a);
+
+
+
+rules
+  if x is mf1 then y is o1   
+  if x is mf2 then y is o2 
+  if x is mf3 then y is o3
+  if x is mf4 then y is o4 
+  
+  if x is mf5 then y is o5
+  if x is mf6 then y is o6 
+  if x is mf7 then y is o7 
+  if x is mf8 then y is o8
